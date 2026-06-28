@@ -87,6 +87,9 @@ function loadPlaces(category = "全部") {
     .then(res => res.json())
     .then(data => {
       places = data.places || [];
+      places.sort((a, b) => {
+  return (b.ratingCount || 0) - (a.ratingCount || 0);
+});
       console.log("API 景點資料:", places);
       renderMarkers("全部");
     })
