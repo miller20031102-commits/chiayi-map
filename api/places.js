@@ -25,7 +25,7 @@ if (req.method === "OPTIONS") {
         "Content-Type": "application/json",
         "X-Goog-Api-Key": apiKey,
         "X-Goog-FieldMask":
-          "places.displayName,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.googleMapsUri"
+          "places.displayName,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.googleMapsUri,places.photos"
       },
       body: JSON.stringify({
         textQuery: query,
@@ -61,6 +61,7 @@ if (req.method === "OPTIONS") {
     rating: place.rating || null,
     ratingCount: place.userRatingCount || 0,
     googleMapUrl: place.googleMapsUri || "",
+    photoName: place.photos?.[0]?.name || "",
     tags: ["AI抓取", "嘉義"],
     description: `${place.displayName?.text || "這個地點"} 是 AI 從 Google Maps 抓到的嘉義推薦地點。`
   }))

@@ -38,6 +38,12 @@ function createTikTokUrl(place) {
 function showPlaceCard(place) {
   const card = document.getElementById("place-card");
   card.innerHTML = `
+  ${place.photoName ? `
+<img
+  src="https://places.googleapis.com/v1/${place.photoName}/media?maxHeightPx=400&key=你的GoogleAPIKey"
+  style="width:100%;border-radius:12px;margin-bottom:10px;"
+>
+` : ""}
     <h2>${place.name}</h2>
     <p>⭐ ${place.rating || "暫無評分"} (${place.ratingCount || 0} 則評論)</p>
     <p>📍 ${place.address || "無地址"}</p>
