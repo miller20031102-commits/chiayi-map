@@ -44,7 +44,7 @@ if (req.method === "OPTIONS") {
 
   const places = (data.places || []).map(place => ({
     name: place.displayName?.text || "未命名地點",
-    category: "景點",category:
+    category:
   query.includes("美食") || query.includes("火雞肉飯") ? "美食" :
   query.includes("咖啡") ? "咖啡廳" :
   query.includes("夜景") ? "晚上" :
