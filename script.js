@@ -37,22 +37,12 @@ function createTikTokUrl(place) {
 
 function showPlaceCard(place) {
   const card = document.getElementById("place-card");
-
   card.innerHTML = `
     <h2>${place.name}</h2>
-    <p><strong>分類：</strong>${place.category}</p>
-    <p><strong>地址：</strong>${place.address}</p>
-    <p>${place.description}</p>
-
-    <div>
-      ${place.tags.map(tag => `<span class="tag">${tag}</span>`).join("")}
-    </div>
-
-    <div class="links">
-      <a href="${createGoogleMapsUrl(place)}" target="_blank">開啟 Google Maps</a>
-      <a href="${createInstagramUrl(place)}" target="_blank">搜尋 Instagram</a>
-      <a href="${createTikTokUrl(place)}" target="_blank">搜尋 TikTok</a>
-    </div>
+    <p>⭐ ${place.rating || "暫無評分"} (${place.ratingCount || 0} 則評論)</p>
+    <p>📍 ${place.address || "無地址"}</p>
+    <p>${place.description || "Google Maps 抓到的嘉義推薦地點。"}</p>
+    <a href="${place.googleMapUrl}" target="_blank">開啟 Google Maps</a>
   `;
 }
 
@@ -68,7 +58,12 @@ function renderMarkers(category = "全部") {
 
   filteredPlaces.forEach(place => {
     const marker = L.marker([place.lat, place.lng]).addTo(map);
-    marker.bindPopup(place.name);
+   marker.bindPopup(`
+  <b>${place.name}</b><br>
+  ⭐ ${place.rating || "暫無評分"} (${place.ratingCount || 0} 則)<br>
+  📍 ${place.address || "無地址"}<br>
+  <a href="${place.googleMapUrl}" target="_blank">Google Maps 導航</a>
+`);
     marker.on("click", () => showPlaceCard(place));
     markers.push(marker);
   });
@@ -93,6 +88,3 @@ renderMarkers("全部");
   });
   });
 });
-
-
- 
