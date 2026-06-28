@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     });
   }
 
-  const query = req.query.q || "嘉義 熱門景點 美食 咖啡廳";
+  const query = req.query.q || "嘉義 美食 咖啡廳 景點 夜景 約會 甜點 火雞肉飯 下午茶 親子 文化路 蘭潭 民雄";
 
   const response = await fetch("https://places.googleapis.com/v1/places:searchText", {
     method: "POST",
