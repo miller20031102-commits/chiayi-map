@@ -124,43 +124,39 @@ function loadPlaces(category = "全部") {
 }
 loadPlaces("全部");
 document.getElementById("analyzeThreadBtn")
-.addEventListener("click", async () => {
+.addEventListener("click", () => {
 
-    const text = document.getElementById("threadText").value;
+    const text = document.getElementById("threadText").value.trim();
 
-    if (!text.trim()) {
+    if (!text) {
         alert("請先貼上 Threads 文章");
         return;
     }
 
-    const foundPlaces = places.filter(place => {
-    const shortName = place.name.replace(/咖啡|珈琲|嘉義店|分店/g, "");
-    return text.includes(shortName);
-});
+    const q = `嘉義 ${text}`;
 
-    if (foundPlaces.length === 0) {
-        alert("沒有找到符合的店家");
-        return;
-    }
+    fetch(`https://chiayi-map.vercel.app/api/places?q=${encodeURIComponent(q)}`)
+        .then(res => res.json())
+        .then(data => {
 
-    markers.forEach(marker => map.removeLayer(marker));
-    markers = [];
+            places = data.places || [];
 
-    foundPlaces.forEach(place => {
-        const marker = L.marker([place.lat, place.lng]).addTo(map);
+            if (places.length === 0) {
+                alert("沒有找到符合的店家");
+                return;
+            }
 
-        marker.bindPopup(`
-            <b>${place.name}</b><br>
-            ⭐ ${place.rating || "暫無評分"}
-        `);
+            renderMarkers("全部");
 
-        markers.push(marker);
-    });
+            map.setView(
+                [places[0].lat, places[0].lng],
+                15
+            );
 
-    map.setView(
-        [foundPlaces[0].lat, foundPlaces[0].lng],
-        15
-    );
-
-    showPlaceCard(foundPlaces[0]);
+            showPlaceCard(places[0]);
+        })
+        .catch(error => {
+            console.error(error);
+            alert("分析失敗");
+        });
 });
