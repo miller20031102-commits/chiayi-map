@@ -14,30 +14,8 @@ if (req.method === "OPTIONS") {
     });
   }
 
- const queries = req.query.q
-  ? [req.query.q]
-  : [
-      "嘉義 美食",
-      "嘉義 咖啡廳",
-      "嘉義 景點",
-      "嘉義 夜景",
-      "嘉義 約會",
-      "嘉義 甜點",
-      "嘉義 火雞肉飯"
-    ];
-
-const allPlaces = [];
-
- const queries = [
-  "嘉義 美食",
-  "嘉義 咖啡廳",
-  "嘉義 景點",
-  "嘉義 夜景",
-  "嘉義 約會"
-];
-
-
-for (const query of queries) {
+ 
+ const query = req.query.q || "嘉義 美食";
 
   const response = await fetch(
     "https://places.googleapis.com/v1/places:searchText",
@@ -64,8 +42,9 @@ for (const query of queries) {
   );
 
   const data = await response.json();
-  if (!response.ok) continue;
-
+  if (!response.ok) {
+  return res.status(response.status).json(data);
+}
   const places = (data.places || []).map(place => ({
     name: place.displayName?.text || "未命名地點",
 
@@ -87,12 +66,10 @@ for (const query of queries) {
   }))
   .filter(place => place.lat && place.lng);
 
-  allPlaces.push(...places);
-}
 
 return res.status(200).json({
-  count: allPlaces.length,
-  places: allPlaces
+  count: places.length,
+places: places
 });
 
 }

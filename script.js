@@ -76,17 +76,22 @@ document.querySelectorAll(".filters button").forEach(button => {
 
     button.classList.add("active");
 
-    renderMarkers(button.dataset.category);
+    loadPlaces(button.dataset.category);
   });
 });
 
-fetch("https://chiayi-map.vercel.app/api/places")
-  .then(res => res.json())
-  .then(data => {
-    places = data.places || [];
-    console.log("API 景點資料:", places);
-    renderMarkers("全部");
-  })
-  .catch(error => {
-    console.error("API 讀取失敗:", error);
-  });
+function loadPlaces(category = "全部") {
+  const q = category === "全部" ? "嘉義 美食" : `嘉義 ${category}`;
+
+  fetch(`https://chiayi-map.vercel.app/api/places?q=${encodeURIComponent(q)}`)
+    .then(res => res.json())
+    .then(data => {
+      places = data.places || [];
+      console.log("API 景點資料:", places);
+      renderMarkers("全部");
+    })
+    .catch(error => {
+      console.error("API 讀取失敗:", error);
+    });
+}
+loadPlaces("全部");
