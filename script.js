@@ -123,3 +123,43 @@ function loadPlaces(category = "全部") {
     });
 }
 loadPlaces("全部");
+document.getElementById("analyzeThreadBtn")
+.addEventListener("click", async () => {
+
+    const text = document.getElementById("threadText").value;
+
+    if (!text.trim()) {
+        alert("請先貼上 Threads 文章");
+        return;
+    }
+
+    const foundPlaces = places.filter(place =>
+        text.includes(place.name)
+    );
+
+    if (foundPlaces.length === 0) {
+        alert("沒有找到符合的店家");
+        return;
+    }
+
+    markers.forEach(marker => map.removeLayer(marker));
+    markers = [];
+
+    foundPlaces.forEach(place => {
+        const marker = L.marker([place.lat, place.lng]).addTo(map);
+
+        marker.bindPopup(`
+            <b>${place.name}</b><br>
+            ⭐ ${place.rating || "暫無評分"}
+        `);
+
+        markers.push(marker);
+    });
+
+    map.setView(
+        [foundPlaces[0].lat, foundPlaces[0].lng],
+        15
+    );
+
+    showPlaceCard(foundPlaces[0]);
+});
