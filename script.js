@@ -46,6 +46,7 @@ function showPlaceCard(place) {
 ` : ""}
     <h2>${place.name}</h2>
     <p>⭐ ${place.rating || "暫無評分"} (${place.ratingCount || 0} 則評論)</p>
+    🔥 熱門分數：${Math.round((place.ratingCount || 0) * 0.7 + (place.rating || 0) * 100 * 0.3)}<br>
     <p>📍 ${place.address || "無地址"}</p>
     <p>${place.description || "Google Maps 抓到的嘉義推薦地點。"}</p>
     <a href="${place.googleMapUrl}" target="_blank">開啟 Google Maps</a>
@@ -81,6 +82,7 @@ ${place.photoUrl ? `
 <b>${place.name}</b><br>
 
 ⭐ ${place.rating || "暫無評分"}
+<p>🔥 熱門分數：${Math.round((place.ratingCount || 0) * 0.7 + (place.rating || 0) * 100 * 0.3)}</p>
 (${place.ratingCount || 0}則)<br>
 
 📍 ${place.address || "無地址"}<br>
@@ -113,7 +115,15 @@ function loadPlaces(category = "全部") {
     .then(data => {
       places = data.places || [];
       places.sort((a, b) => {
-  return (b.ratingCount || 0) - (a.ratingCount || 0);
+    const scoreA =
+        (a.ratingCount || 0) * 0.7 +
+        (a.rating || 0) * 100 * 0.3;
+
+    const scoreB =
+        (b.ratingCount || 0) * 0.7 +
+        (b.rating || 0) * 100 * 0.3;
+
+    return scoreB - scoreA;
 });
       console.log("API 景點資料:", places);
       renderMarkers("全部");
