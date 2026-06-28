@@ -73,7 +73,22 @@
   }
 ];
 
-const map = L.map("map").setView([23.4801, 120.4491], 14);
+const chiayiBounds = [
+    [23.40, 120.35], // 西南角
+    [23.56, 120.58]  // 東北角
+];
+
+const map = L.map("map", {
+    maxBounds: chiayiBounds,
+    maxBoundsViscosity: 1.0,
+    minZoom: 12,
+    maxZoom: 18
+}).setView([23.4801, 120.4491], 13);
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    attribution: "© OpenStreetMap"
+}).addTo(map);
+
 
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "© OpenStreetMap"
