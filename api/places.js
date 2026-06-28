@@ -14,42 +14,68 @@ if (req.method === "OPTIONS") {
     });
   }
 
-  const query = req.query.q || "嘉義 美食 咖啡廳 景點 夜景 約會 甜點 火雞肉飯 下午茶 親子 文化路 蘭潭 民雄";
+ const queries = req.query.q
+  ? [req.query.q]
+  : [
+      "嘉義 美食",
+      "嘉義 咖啡廳",
+      "嘉義 景點",
+      "嘉義 夜景",
+      "嘉義 約會",
+      "嘉義 甜點",
+      "嘉義 火雞肉飯"
+    ];
 
-  const response = await fetch("https://places.googleapis.com/v1/places:searchText", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "X-Goog-Api-Key": apiKey,
-      "X-Goog-FieldMask": "places.displayName,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.googleMapsUri"
-    },
-    body: JSON.stringify({
-      textQuery: query,
-      languageCode: "zh-TW",
-      regionCode: "TW",
-      locationBias: {
-        rectangle: {
-          low: { latitude: 23.40, longitude: 120.35 },
-          high: { latitude: 23.56, longitude: 120.58 }
+const allPlaces = [];
+
+ const queries = [
+  "嘉義 美食",
+  "嘉義 咖啡廳",
+  "嘉義 景點",
+  "嘉義 夜景",
+  "嘉義 約會"
+];
+
+
+for (const query of queries) {
+
+  const response = await fetch(
+    "https://places.googleapis.com/v1/places:searchText",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-Goog-Api-Key": apiKey,
+        "X-Goog-FieldMask":
+          "places.displayName,places.formattedAddress,places.location,places.rating,places.userRatingCount,places.googleMapsUri"
+      },
+      body: JSON.stringify({
+        textQuery: query,
+        languageCode: "zh-TW",
+        regionCode: "TW",
+        locationBias: {
+          rectangle: {
+            low: { latitude: 23.40, longitude: 120.35 },
+            high: { latitude: 23.56, longitude: 120.58 }
+          }
         }
-      }
-    })
-  });
+      })
+    }
+  );
 
   const data = await response.json();
-
-  if (!response.ok) {
-    return res.status(response.status).json(data);
-  }
+  if (!response.ok) continue;
 
   const places = (data.places || []).map(place => ({
     name: place.displayName?.text || "未命名地點",
+
     category:
-  query.includes("美食") || query.includes("火雞肉飯") ? "美食" :
-  query.includes("咖啡") ? "咖啡廳" :
-  query.includes("夜景") ? "晚上" :
-  query.includes("約會") ? "約會" :
-  "景點",
+      query.includes("美食") ? "美食" :
+      query.includes("咖啡") ? "咖啡廳" :
+      query.includes("夜景") ? "晚上" :
+      query.includes("約會") ? "約會" :
+      "景點",
+
     lat: place.location?.latitude,
     lng: place.location?.longitude,
     address: place.formattedAddress || "",
@@ -58,11 +84,15 @@ if (req.method === "OPTIONS") {
     googleMapUrl: place.googleMapsUri || "",
     tags: ["AI抓取", "嘉義"],
     description: `${place.displayName?.text || "這個地點"} 是 AI 從 Google Maps 抓到的嘉義推薦地點。`
-  })).filter(place => place.lat && place.lng);
+  }))
+  .filter(place => place.lat && place.lng);
 
-  return res.status(200).json({
-    query,
-    count: places.length,
-    places
-  });
+  allPlaces.push(...places);
+}
+
+return res.status(200).json({
+  count: allPlaces.length,
+  places: allPlaces
+});
+
 }
