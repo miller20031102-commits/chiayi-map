@@ -133,9 +133,10 @@ document.getElementById("analyzeThreadBtn")
         return;
     }
 
-    const foundPlaces = places.filter(place =>
-        text.includes(place.name)
-    );
+    const foundPlaces = places.filter(place => {
+    const shortName = place.name.replace(/咖啡|珈琲|嘉義店|分店/g, "");
+    return text.includes(shortName);
+});
 
     if (foundPlaces.length === 0) {
         alert("沒有找到符合的店家");
