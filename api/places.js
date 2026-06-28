@@ -61,8 +61,13 @@ if (req.method === "OPTIONS") {
     rating: place.rating || null,
     ratingCount: place.userRatingCount || 0,
     googleMapUrl: place.googleMapsUri || "",
-    photoName: place.photos?.[0]?.name || "",
-    tags: ["AI抓取", "嘉義"],
+
+photoUrl:
+  place.photos?.[0]?.name
+    ? `https://places.googleapis.com/v1/${place.photos[0].name}/media?maxHeightPx=400&key=${apiKey}`
+    : "",
+
+tags: ["AI抓取", "嘉義"],
     description: `${place.displayName?.text || "這個地點"} 是 AI 從 Google Maps 抓到的嘉義推薦地點。`
   }))
   .filter(place => place.lat && place.lng);

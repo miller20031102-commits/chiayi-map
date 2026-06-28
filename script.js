@@ -38,9 +38,9 @@ function createTikTokUrl(place) {
 function showPlaceCard(place) {
   const card = document.getElementById("place-card");
   card.innerHTML = `
-  ${place.photoName ? `
+  ${place.photoUrl ? `
 <img
-  src="https://places.googleapis.com/v1/${place.photoName}/media?maxHeightPx=400&key=你的GoogleAPIKey"
+  src="${place.photoUrl}"
   style="width:100%;border-radius:12px;margin-bottom:10px;"
 >
 ` : ""}
@@ -65,10 +65,29 @@ function renderMarkers(category = "全部") {
   filteredPlaces.forEach(place => {
     const marker = L.marker([place.lat, place.lng]).addTo(map);
    marker.bindPopup(`
-  <b>${place.name}</b><br>
-  ⭐ ${place.rating || "暫無評分"} (${place.ratingCount || 0} 則)<br>
-  📍 ${place.address || "無地址"}<br>
-  <a href="${place.googleMapUrl}" target="_blank">Google Maps 導航</a>
+${place.photoUrl ? `
+<img
+  src="${place.photoUrl}"
+  style="
+    width:180px;
+    height:120px;
+    object-fit:cover;
+    border-radius:10px;
+    margin-bottom:8px;
+  "
+>
+` : ""}
+
+<b>${place.name}</b><br>
+
+⭐ ${place.rating || "暫無評分"}
+(${place.ratingCount || 0}則)<br>
+
+📍 ${place.address || "無地址"}<br>
+
+<a href="${place.googleMapUrl}" target="_blank">
+Google Maps 導航
+</a>
 `);
     marker.on("click", () => showPlaceCard(place));
     markers.push(marker);
