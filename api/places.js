@@ -37,7 +37,12 @@ export default async function handler(req, res) {
 
   const places = (data.places || []).map(place => ({
     name: place.displayName?.text || "未命名地點",
-    category: "景點",
+    category: "景點",category:
+  query.includes("美食") || query.includes("火雞肉飯") ? "美食" :
+  query.includes("咖啡") ? "咖啡廳" :
+  query.includes("夜景") ? "晚上" :
+  query.includes("約會") ? "約會" :
+  "景點",
     lat: place.location?.latitude,
     lng: place.location?.longitude,
     address: place.formattedAddress || "",
