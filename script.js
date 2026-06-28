@@ -61,8 +61,10 @@ function renderMarkers(category = "全部") {
   markers = [];
 
   const filteredPlaces = category === "全部"
-    ? places
-    : places.filter(place => place.category === category || place.tags.includes(category));
+  ? places
+  : places.filter(place =>
+      place.category === category || (place.tags && place.tags.includes(category))
+    );
 
   filteredPlaces.forEach(place => {
     const marker = L.marker([place.lat, place.lng]).addTo(map);
@@ -80,8 +82,11 @@ document.querySelectorAll(".filters button").forEach(button => {
     fetch("https://chiayi-map.vercel.app/api/places")
   .then(res => res.json())
   .then(data => {
-    places = data.places || data;
-    renderMarkers("全部");
+   places = data.places || [];
+
+console.log("API 景點資料：", places);
+
+renderMarkers("全部");
   })
   .catch(error => {
     console.error("API 讀取失敗：", error);
