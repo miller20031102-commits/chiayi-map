@@ -127,6 +127,13 @@ document.getElementById("analyzeThreadBtn")
 .addEventListener("click", () => {
 
     const text = document.getElementById("threadText").value.trim();
+    if (
+    text.includes("threads.net") ||
+    text.includes("threads.com")
+) {
+    alert("目前網址無法直接解析，請先打開 Threads，複製文章文字後貼上來。");
+    return;
+}
 
     if (!text) {
         alert("請先貼上 Threads 文章");
