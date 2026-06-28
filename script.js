@@ -71,20 +71,22 @@ function renderMarkers(category = "全部") {
 
 document.querySelectorAll(".filters button").forEach(button => {
   button.addEventListener("click", () => {
-    document.querySelectorAll(".filters button").forEach(btn => btn.classList.remove("active"));
+    document.querySelectorAll(".filters button")
+      .forEach(btn => btn.classList.remove("active"));
+
     button.classList.add("active");
 
-    fetch("https://chiayi-map.vercel.app/api/places")
-  .then(res => res.json())
-  .then(data => {
-   places = data.places || [];
-
-console.log("API 景點資料：", places);
-
-renderMarkers("全部");
-  })
-  .catch(error => {
-    console.error("API 讀取失敗：", error);
-  });
+    renderMarkers(button.dataset.category);
   });
 });
+
+fetch("https://chiayi-map.vercel.app/api/places")
+  .then(res => res.json())
+  .then(data => {
+    places = data.places || [];
+    console.log("API 景點資料:", places);
+    renderMarkers("全部");
+  })
+  .catch(error => {
+    console.error("API 讀取失敗:", error);
+  });
