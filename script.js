@@ -1,7 +1,7 @@
 
 const SUPABASE_URL = "https://riyxizvetthvsnvqugil.supabase.co";
 const SUPABASE_KEY = "sb_publishable_wsuik9OSKrZUWGfT6HlzsQ_7dtsSa7r";
-const supabase = window.supabase.createClient(
+const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_KEY
 );
@@ -238,7 +238,7 @@ async function votePlace(category, placeName) {
 
     localStorage.setItem("user_id", userId);
 
-    const { data: myVotes } = await supabase
+    const { data: myVotes } = await db
         .from("votes")
         .select("*")
         .eq("user_id", userId)
@@ -249,7 +249,7 @@ async function votePlace(category, placeName) {
         return;
     }
 
-    await supabase
+    await db
         .from("votes")
         .insert({
             category,
