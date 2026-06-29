@@ -293,3 +293,14 @@ footer {
     box-shadow:0 5px 15px rgba(255,179,71,.35);
 }
 }
+.my-custom-icon{
+    width:52px !important;
+    height:66px !important;
+    background:transparent !important;
+    border:none !important;
+}
+
+.my-custom-icon div{
+    width:52px;
+    height:52px;
+}

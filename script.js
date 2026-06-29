@@ -170,10 +170,10 @@ const customIcon = L.divIcon({
             ${emoji}
         </div>
     `,
-    className: "",
-    iconSize: [56, 66],
-    iconAnchor: [28, 66],
-    popupAnchor: [0, -58]
+    className: "my-custom-icon",
+    iconSize: [52, 66],
+    iconAnchor: [26, 66],
+    popupAnchor: [0, -60]
 });
 
 const marker = L.marker(
