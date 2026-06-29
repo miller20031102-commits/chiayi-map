@@ -84,8 +84,38 @@ function renderMarkers(category = "全部") {
       place.category === category || (place.tags && place.tags.includes(category))
     );
 
-  filteredPlaces.forEach(place => {
-    const marker = L.marker([place.lat, place.lng]).addTo(map);
+  filteredPlaces.forEach((place, index) => {
+    let iconUrl =
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png";
+
+if (index === 0) {
+    iconUrl =
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png";
+}
+else if (index === 1) {
+    iconUrl =
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-green.png";
+}
+else if (index === 2) {
+    iconUrl =
+    "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png";
+}
+
+const customIcon = new L.Icon({
+    iconUrl: iconUrl,
+    shadowUrl:
+    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41]
+});
+
+const marker = L.marker(
+    [place.lat, place.lng],
+    { icon: customIcon }
+).addTo(map);
    marker.bindPopup(`
 ${place.photoUrl ? `
 <img
