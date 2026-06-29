@@ -98,6 +98,15 @@ main {
     color:#4b2d19;
     margin-top:18px;
 }
+.place-review{
+    background:#fff7ef;
+    border-radius:18px;
+    padding:14px 18px;
+    line-height:1.7;
+    color:#7b5539;
+    margin-top:16px;
+    border-left:5px solid #ffb347;
+}
 
 .ranking-box {
   position: fixed;
@@ -264,4 +273,20 @@ footer {
 
 #exactSearchBtn:active{
     transform:scale(.95);
+}
+.ranking-legend{
+    margin:10px 0;
+    padding:10px;
+    background:#fff7e8;
+    border-radius:14px;
+    font-size:13px;
+    line-height:1.8;
+    color:#8a5b2f;
+    border:1px solid #ffe0a3;
+}
+
+.ranking-legend div{
+    display:flex;
+    align-items:center;
+    gap:8px;
 }
