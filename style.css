@@ -36,20 +36,22 @@ header p {
   background: #fff7ec;
 }
 
-.filters button {
-  border: 0;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: #fff;
-  color: #6b4b2b;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  font-weight: 700;
-  white-space: nowrap;
+.filters button{
+    border:none;
+    padding:12px 18px;
+    border-radius:999px;
+    background:#fff;
+    box-shadow:0 4px 12px rgba(0,0,0,.08);
+    transition:.2s;
 }
 
-.filters button.active {
-  background: #ff8f70;
-  color: white;
+.filters button:hover{
+    transform:translateY(-2px);
+}
+
+.filters button.active{
+    background:linear-gradient(135deg,#ffb347,#ffd36b);
+    color:white;
 }
 
 main {
@@ -159,11 +161,11 @@ footer {
 
   .exact-search-box{
     display:flex;
-    justify-content:center;
+    justify-content:center;   /* 水平置中 */
     align-items:center;
-    gap:14px;
-    width:100%;
+    gap:12px;
     margin:20px auto;
+    width:100%;
 }
 
   .ranking-box {
