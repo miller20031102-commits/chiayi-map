@@ -329,3 +329,16 @@ async function getVoteCount(category, placeName) {
 
     return count || 0;
 }
+document.getElementById("rankingToggle")
+.addEventListener("click", () => {
+    const box = document.getElementById("rankingBox");
+    const btn = document.getElementById("rankingToggle");
+
+    box.classList.toggle("collapsed");
+
+    if (box.classList.contains("collapsed")) {
+        btn.innerText = "🔥 TOP 5 ▼";
+    } else {
+        btn.innerText = "🔥 TOP 5 ▲";
+    }
+});

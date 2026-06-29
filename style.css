@@ -171,3 +171,21 @@ footer {
     overflow-y: auto;
   }
 }
+.ranking-toggle {
+    width: 100%;
+    border: none;
+    background: transparent;
+    font-weight: 800;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: left;
+    margin-bottom: 8px;
+}
+
+.ranking-box.collapsed #rankingList {
+    display: none;
+}
+
+.ranking-box.collapsed {
+    width: auto;
+}
