@@ -171,8 +171,9 @@ const customIcon = L.divIcon({
         </div>
     `,
     className: "",
-    iconSize: [42, 42],
-    iconAnchor: [21, 42]
+    iconSize: [56, 66],
+    iconAnchor: [28, 66],
+    popupAnchor: [0, -58]
 });
 
 const marker = L.marker(
@@ -345,16 +346,15 @@ async function getVoteCount(category, placeName) {
 
     return count || 0;
 }
-document.getElementById("rankingToggle")
-.addEventListener("click", () => {
-    const box = document.getElementById("rankingBox");
-    const btn = document.getElementById("rankingToggle");
+const rankingBox = document.getElementById("rankingBox");
+const rankingToggle = document.getElementById("rankingToggle");
 
-    box.classList.toggle("collapsed");
+rankingToggle.addEventListener("click", () => {
+    rankingBox.classList.toggle("open");
 
-    if (box.classList.contains("collapsed")) {
-        btn.innerText = "🔥 TOP 5 ▼";
+    if (rankingBox.classList.contains("open")) {
+        rankingToggle.innerHTML = "🔥 TOP 5 ▼";
     } else {
-        btn.innerText = "🔥";
+        rankingToggle.innerHTML = "🔥";
     }
 });
