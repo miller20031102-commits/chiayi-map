@@ -182,15 +182,15 @@ footer {
     box-shadow:0 5px 15px rgba(255,179,71,.35);
 }
 .cute-marker{
-    width:60px;
-    height:60px;
+    width:52px;
+    height:52px;
     background:white;
-    border:3px solid #ffb347;
+    border:4px solid #ffb347;
     border-radius:50%;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:32px;
+    font-size:28px;
     box-shadow:0 4px 12px rgba(0,0,0,.25);
     position:relative;
 }
@@ -198,23 +198,18 @@ footer {
 .cute-marker::after{
     content:"";
     position:absolute;
-    bottom:-14px;
+    bottom:-13px;
     left:50%;
     transform:translateX(-50%);
     border-left:10px solid transparent;
     border-right:10px solid transparent;
-    border-top:16px solid #ffb347;
-}
-.rank-0{
-    transform: scale(1.5);
+    border-top:14px solid #ffb347;
 }
 
-.rank-1{
-    transform: scale(1.35);
-}
-
+.rank-0,
+.rank-1,
 .rank-2{
-    transform: scale(1.2);
+    transform:none;
 }
 #exactSearchInput{
     width:420px;
