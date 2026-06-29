@@ -193,7 +193,7 @@ async function loadPlaces(category = "全部") {
 
   fetch(`https://chiayi-map.vercel.app/api/places?q=${encodeURIComponent(q)}`)
     .then(res => res.json())
-    .then(data => {
+    .then(async data => {
       places = data.places || [];
       for (const place of places) {
     place.voteCount = await getVoteCount(
