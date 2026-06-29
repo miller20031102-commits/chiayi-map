@@ -1,4 +1,10 @@
 
+const SUPABASE_URL = "https://riyxizvetthvsnvqugil.supabase.co";
+const SUPABASE_KEY = "sb_publishable_wsuik9OSKrZUWGfT6HlzsQ_7dtsSa7r";
+const supabase = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_KEY
+);
 let places = [];
 const chiayiBounds = [
     [23.40, 120.35], // 西南角
@@ -50,6 +56,15 @@ function showPlaceCard(place) {
     <p>📍 ${place.address || "無地址"}</p>
     <p>${place.description || "Google Maps 抓到的嘉義推薦地點。"}</p>
     <a href="${place.googleMapUrl}" target="_blank">開啟 Google Maps</a>
+    <br><br>
+
+<button onclick="votePlace('${place.category}','${place.name}')">
+👍 投票給這間店
+</button>
+
+<p id="vote-count-${place.name}">
+載入票數中...
+</p>
   `;
 }
 
@@ -215,3 +230,32 @@ document.getElementById("exactSearchBtn")
             alert("搜尋失敗");
         });
 });
+async function votePlace(category, placeName) {
+
+    const userId =
+        localStorage.getItem("user_id") ||
+        crypto.randomUUID();
+
+    localStorage.setItem("user_id", userId);
+
+    const { data: myVotes } = await supabase
+        .from("votes")
+        .select("*")
+        .eq("user_id", userId)
+        .eq("category", category);
+
+    if (myVotes.length >= 2) {
+        alert("每個分類最多只能投 2 間店");
+        return;
+    }
+
+    await supabase
+        .from("votes")
+        .insert({
+            category,
+            place_name: placeName,
+            user_id: userId
+        });
+
+    alert("投票成功！");
+}
