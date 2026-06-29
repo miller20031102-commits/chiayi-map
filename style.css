@@ -189,3 +189,27 @@ footer {
 .ranking-box.collapsed {
     width: auto;
 }
+.cute-marker{
+    width:42px;
+    height:42px;
+    background:white;
+    border:3px solid #ffb347;
+    border-radius:50%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:22px;
+    box-shadow:0 4px 12px rgba(0,0,0,.25);
+    position:relative;
+}
+
+.cute-marker::after{
+    content:"";
+    position:absolute;
+    bottom:-10px;
+    left:50%;
+    transform:translateX(-50%);
+    border-left:8px solid transparent;
+    border-right:8px solid transparent;
+    border-top:12px solid #ffb347;
+}

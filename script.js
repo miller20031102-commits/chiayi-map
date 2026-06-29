@@ -148,15 +148,26 @@ else if (index === 2) {
     "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-orange.png";
 }
 
-const customIcon = new L.Icon({
-    iconUrl: iconUrl,
-    shadowUrl:
-    "https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png",
+const emoji =
+    place.category === "咖啡" ? "☕" :
+    place.category === "火鍋" ? "🍲" :
+    place.category === "燒肉" ? "🥩" :
+    place.category === "酒吧" ? "🍺" :
+    place.category === "KTV" ? "🎤" :
+    place.category === "下午茶" ? "🧁" :
+    place.category === "親子" ? "🎠" :
+    place.category === "景點" ? "🌳" :
+    "🍜";
 
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
+const customIcon = L.divIcon({
+    html: `
+        <div class="cute-marker">
+            ${emoji}
+        </div>
+    `,
+    className: "",
+    iconSize: [42, 42],
+    iconAnchor: [21, 42]
 });
 
 const marker = L.marker(
