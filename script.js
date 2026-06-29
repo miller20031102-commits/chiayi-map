@@ -294,15 +294,7 @@ document.getElementById("exactSearchBtn")
             alert("搜尋失敗");
         });
 });
-async function getVoteCount(category, placeName) {
-    const { count } = await supabase
-        .from("votes")
-        .select("*", { count: "exact", head: true })
-        .eq("category", category)
-        .eq("place_name", placeName);
 
-    return count || 0;
-}
 async function votePlace(category, placeName) {
 
     const userId =
@@ -349,12 +341,13 @@ async function getVoteCount(category, placeName) {
 const rankingBox = document.getElementById("rankingBox");
 const rankingToggle = document.getElementById("rankingToggle");
 
-rankingToggle.addEventListener("click", () => {
+rankingBox.classList.remove("open");
+rankingToggle.innerHTML = "🔥";
+
+rankingToggle.onclick = () => {
     rankingBox.classList.toggle("open");
 
-    if (rankingBox.classList.contains("open")) {
-        rankingToggle.innerHTML = "🔥 TOP 5 ▼";
-    } else {
-        rankingToggle.innerHTML = "🔥";
-    }
-});
+    rankingToggle.innerHTML = rankingBox.classList.contains("open")
+        ? "🔥 TOP 5 ▼"
+        : "🔥";
+};

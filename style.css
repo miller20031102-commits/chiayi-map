@@ -341,3 +341,10 @@ footer {
 .rank-2{
     transform:none;
 }
+.ranking-box .ranking-content{
+    display:none !important;
+}
+
+.ranking-box.open .ranking-content{
+    display:block !important;
+}
