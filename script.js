@@ -355,6 +355,6 @@ document.getElementById("rankingToggle")
     if (box.classList.contains("collapsed")) {
         btn.innerText = "🔥 TOP 5 ▼";
     } else {
-        btn.innerText = "🔥 TOP 5 ▲";
+        btn.innerText = "🔥";
     }
 });
