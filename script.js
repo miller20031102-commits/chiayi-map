@@ -270,9 +270,9 @@ document.getElementById("exactSearchBtn")
             let resultPlaces = data.places || [];
 
             resultPlaces = resultPlaces.filter(place =>
-                place.name.includes(keyword) ||
-                keyword.includes(place.name)
-            );
+    place.name.toLowerCase()
+        .includes(keyword.toLowerCase())
+);
 
             if (resultPlaces.length === 0) {
                 alert("找不到這間店，請換個關鍵字");
