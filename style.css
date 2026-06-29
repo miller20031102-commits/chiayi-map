@@ -213,3 +213,14 @@ footer {
     border-right:8px solid transparent;
     border-top:12px solid #ffb347;
 }
+.rank-0{
+    transform: scale(1.5);
+}
+
+.rank-1{
+    transform: scale(1.35);
+}
+
+.rank-2{
+    transform: scale(1.2);
+}

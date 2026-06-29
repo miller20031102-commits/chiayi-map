@@ -149,6 +149,9 @@ else if (index === 2) {
 }
 
 const emoji =
+    index === 0 ? "👑" :
+    index === 1 ? "💎" :
+    index === 2 ? "⭐" :
     place.category === "咖啡" ? "☕" :
     place.category === "火鍋" ? "🍲" :
     place.category === "燒肉" ? "🥩" :
@@ -157,11 +160,11 @@ const emoji =
     place.category === "下午茶" ? "🧁" :
     place.category === "親子" ? "🎠" :
     place.category === "景點" ? "🌳" :
-    "🍜";
+    "📍";
 
 const customIcon = L.divIcon({
     html: `
-        <div class="cute-marker">
+        <div class="cute-marker rank-${index}">
             ${emoji}
         </div>
     `,
