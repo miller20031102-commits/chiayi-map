@@ -161,3 +161,50 @@ footer {
     font-weight: 700;
     white-space: nowrap;
 }
+.ranking-box {
+    position: fixed;
+    top: 90px;
+    right: 12px;
+    z-index: 1000;
+    width: 220px;
+    background: white;
+    border-radius: 16px;
+    padding: 12px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
+}
+
+.ranking-box h3 {
+    margin: 0 0 8px;
+    font-size: 16px;
+}
+
+#rankingList {
+    margin: 0;
+    padding-left: 0;
+    list-style: none;
+}
+
+.ranking-item {
+    width: 100%;
+    border: 0;
+    background: #f5f5f5;
+    border-radius: 10px;
+    padding: 8px;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    gap: 6px;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .ranking-box {
+        top: auto;
+        right: 10px;
+        bottom: 20px;
+        width: 190px;
+        max-height: 220px;
+        overflow-y: auto;
+    }
+}

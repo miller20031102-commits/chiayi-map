@@ -78,7 +78,36 @@ function showPlaceCard(place) {
     }
 });
 }
+function updateRankingList(rankedPlaces) {
+    const list = document.getElementById("rankingList");
+    if (!list) return;
 
+    list.innerHTML = "";
+
+    rankedPlaces.slice(0, 5).forEach((place, index) => {
+        const li = document.createElement("li");
+
+        const medal =
+            index === 0 ? "🥇" :
+            index === 1 ? "🥈" :
+            index === 2 ? "🥉" :
+            `${index + 1}.`;
+
+        li.innerHTML = `
+            <button class="ranking-item">
+                <span>${medal} ${place.name}</span>
+                <small>👍 ${place.voteCount || 0}</small>
+            </button>
+        `;
+
+        li.querySelector("button").addEventListener("click", () => {
+            map.setView([place.lat, place.lng], 16);
+            showPlaceCard(place);
+        });
+
+        list.appendChild(li);
+    });
+}
 function renderMarkers(category = "全部") {
   markers.forEach(marker => map.removeLayer(marker));
   markers = [];
@@ -101,19 +130,7 @@ filteredPlaces.sort((a, b) => {
 
     return scoreB - scoreA;
 });
-  filteredPlaces.sort((a, b) => {
-    const scoreA =
-        (a.rating || 0) * 800 +
-        Math.min(a.ratingCount || 0, 1000) * 0.2 +
-        (a.voteCount || 0) * 100;
-
-    const scoreB =
-        (b.rating || 0) * 800 +
-        Math.min(b.ratingCount || 0, 1000) * 0.2 +
-        (b.voteCount || 0) * 100;
-
-    return scoreB - scoreA;
-});
+ updateRankingList(filteredPlaces);
 filteredPlaces.forEach((place, index) => {
     let iconUrl =
     "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png";
