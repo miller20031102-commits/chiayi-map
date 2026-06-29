@@ -5,14 +5,16 @@
 body {
   margin: 0;
   font-family: "Noto Sans TC", Arial, sans-serif;
-  background: #f7f4ef;
-  color: #222;
+  background: #fff7ec;
+  color: #3a2a1a;
 }
 
 header {
-  padding: 28px 18px 18px;
+  padding: 26px 18px 20px;
   text-align: center;
-  background: linear-gradient(135deg, #ffb347, #ffcc70);
+  background: linear-gradient(135deg, #ffd36e, #ff9f9f);
+  border-bottom-left-radius: 28px;
+  border-bottom-right-radius: 28px;
 }
 
 header h1 {
@@ -23,6 +25,7 @@ header h1 {
 header p {
   margin: 0;
   font-size: 15px;
+  color: #6b4b2b;
 }
 
 .filters {
@@ -30,23 +33,58 @@ header p {
   gap: 10px;
   padding: 14px;
   overflow-x: auto;
-  background: #fff;
-  border-bottom: 1px solid #ddd;
+  background: #fff7ec;
 }
 
 .filters button {
-  border: none;
+  border: 0;
   padding: 10px 16px;
   border-radius: 999px;
-  background: #eee;
-  cursor: pointer;
+  background: #fff;
+  color: #6b4b2b;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  font-weight: 700;
   white-space: nowrap;
-  font-weight: 600;
 }
 
 .filters button.active {
-  background: #222;
-  color: #fff;
+  background: #ff8f70;
+  color: white;
+}
+
+.exact-search-box,
+.thread-box {
+  display: flex;
+  gap: 10px;
+  padding: 12px 16px;
+  background: #fff7ec;
+}
+
+#exactSearchInput,
+#threadText {
+  flex: 1;
+  width: 100%;
+  padding: 13px 15px;
+  border: 2px solid #ffe0bd;
+  border-radius: 18px;
+  font-size: 16px;
+  background: #fff;
+}
+
+#threadText {
+  height: 120px;
+  resize: vertical;
+}
+
+#exactSearchBtn,
+#analyzeThreadBtn {
+  border: 0;
+  border-radius: 18px;
+  padding: 12px 16px;
+  background: #ff8f70;
+  color: white;
+  font-weight: 800;
+  white-space: nowrap;
 }
 
 main {
@@ -58,153 +96,113 @@ main {
 
 #map {
   height: 70vh;
-  border-radius: 18px;
+  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
 }
 
 .place-card {
   background: #fff;
-  border-radius: 18px;
-  padding: 20px;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  border-radius: 24px;
+  padding: 18px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+.place-card img {
+  width: 100%;
+  border-radius: 20px;
 }
 
 .place-card h2 {
-  margin-top: 0;
+  margin: 12px 0;
+  font-size: 24px;
 }
 
-.tag {
+.place-card p {
+  line-height: 1.6;
+}
+
+.place-card a,
+.place-card button {
   display: inline-block;
-  margin: 4px 4px 4px 0;
-  padding: 6px 10px;
+  margin-top: 8px;
+  border: 0;
   border-radius: 999px;
-  background: #f0f0f0;
-  font-size: 13px;
-}
-
-.links {
-  display: grid;
-  gap: 8px;
-  margin-top: 16px;
-}
-
-.links a {
-  text-decoration: none;
-  text-align: center;
-  padding: 11px;
-  border-radius: 12px;
-  background: #222;
+  padding: 11px 16px;
+  background: #ff8f70;
   color: #fff;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.ranking-box {
+  position: fixed;
+  top: 120px;
+  right: 14px;
+  z-index: 1000;
+  width: 230px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 22px;
+  padding: 12px;
+  box-shadow: 0 8px 28px rgba(0,0,0,0.18);
+}
+
+.ranking-box h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+#rankingList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ranking-item {
+  width: 100%;
+  border: 0;
+  background: #fff2e5;
+  border-radius: 14px;
+  padding: 9px;
+  margin-bottom: 7px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
   font-weight: 700;
 }
 
 footer {
   text-align: center;
   padding: 18px;
-  color: #777;
+  color: #9b7b5c;
 }
 
 @media (max-width: 800px) {
+  header h1 {
+    font-size: 24px;
+  }
+
   main {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
   }
 
   #map {
-    height: 58vh;
+    height: 55vh;
   }
-  }
+
+  .exact-search-box,
   .thread-box {
-    padding: 20px;
-}
+    flex-direction: column;
+  }
 
-#threadText {
-    width: 100%;
-    max-width: 700px;
-    height: 180px;
-    padding: 15px;
-    font-size: 16px;
-    border-radius: 12px;
-    border: 1px solid #ccc;
-    resize: vertical;
-}
-
-#analyzeThreadBtn {
-    margin-top: 12px;
-    padding: 12px 24px;
-    font-size: 16px;
-    border: none;
-    border-radius: 10px;
-    cursor: pointer;
-}
-.exact-search-box {
-    display: flex;
-    gap: 8px;
-    padding: 12px;
-    background: #fff;
-}
-
-#exactSearchInput {
-    flex: 1;
-    padding: 12px;
-    border-radius: 12px;
-    border: 1px solid #ddd;
-    font-size: 16px;
-}
-
-#exactSearchBtn {
-    padding: 12px 16px;
-    border: 0;
-    border-radius: 12px;
-    background: #222;
-    color: #fff;
-    font-weight: 700;
-    white-space: nowrap;
-}
-.ranking-box {
-    position: fixed;
-    top: 90px;
-    right: 12px;
-    z-index: 1000;
-    width: 220px;
-    background: white;
-    border-radius: 16px;
-    padding: 12px;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.18);
-}
-
-.ranking-box h3 {
-    margin: 0 0 8px;
-    font-size: 16px;
-}
-
-#rankingList {
-    margin: 0;
-    padding-left: 0;
-    list-style: none;
-}
-
-.ranking-item {
-    width: 100%;
-    border: 0;
-    background: #f5f5f5;
-    border-radius: 10px;
-    padding: 8px;
-    margin-bottom: 6px;
-    display: flex;
-    justify-content: space-between;
-    gap: 6px;
-    font-size: 13px;
-    cursor: pointer;
-}
-
-@media (max-width: 768px) {
-    .ranking-box {
-        top: auto;
-        right: 10px;
-        bottom: 20px;
-        width: 190px;
-        max-height: 220px;
-        overflow-y: auto;
-    }
+  .ranking-box {
+    top: auto;
+    right: 10px;
+    bottom: 16px;
+    width: 210px;
+    max-height: 220px;
+    overflow-y: auto;
+  }
 }
