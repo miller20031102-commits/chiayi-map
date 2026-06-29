@@ -52,7 +52,12 @@ function showPlaceCard(place) {
 ` : ""}
     <h2>${place.name}</h2>
     <p>⭐ ${place.rating || "暫無評分"} (${place.ratingCount || 0} 則評論)</p>
-    🔥 熱門分數：${Math.round((place.ratingCount || 0) * 0.7 + (place.rating || 0) * 100 * 0.3)}<br>
+    🔥 熱門分數：
+    ${Math.round(
+    (place.rating || 0) * 800 +
+    Math.min(place.ratingCount || 0, 1000) * 0.2 +
+    (place.voteCount || 0) * 100
+)}
     <p>📍 ${place.address || "無地址"}</p>
     <p>${place.description || "Google Maps 抓到的嘉義推薦地點。"}</p>
     <a href="${place.googleMapUrl}" target="_blank">開啟 Google Maps</a>
@@ -83,8 +88,33 @@ function renderMarkers(category = "全部") {
   : places.filter(place =>
       place.category === category || (place.tags && place.tags.includes(category))
     );
+filteredPlaces.sort((a, b) => {
+    const scoreA =
+        (a.rating || 0) * 800 +
+        Math.min(a.ratingCount || 0, 1000) * 0.2 +
+        (a.voteCount || 0) * 100;
 
-  filteredPlaces.forEach((place, index) => {
+    const scoreB =
+        (b.rating || 0) * 800 +
+        Math.min(b.ratingCount || 0, 1000) * 0.2 +
+        (b.voteCount || 0) * 100;
+
+    return scoreB - scoreA;
+});
+  filteredPlaces.sort((a, b) => {
+    const scoreA =
+        (a.rating || 0) * 800 +
+        Math.min(a.ratingCount || 0, 1000) * 0.2 +
+        (a.voteCount || 0) * 100;
+
+    const scoreB =
+        (b.rating || 0) * 800 +
+        Math.min(b.ratingCount || 0, 1000) * 0.2 +
+        (b.voteCount || 0) * 100;
+
+    return scoreB - scoreA;
+});
+filteredPlaces.forEach((place, index) => {
     let iconUrl =
     "https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png";
 
@@ -165,6 +195,12 @@ function loadPlaces(category = "全部") {
     .then(res => res.json())
     .then(data => {
       places = data.places || [];
+      for (const place of places) {
+    place.voteCount = await getVoteCount(
+        place.category,
+        place.name
+    );
+}
       places.sort((a, b) => {
     const scoreA =
         (a.ratingCount || 0) * 0.7 +
@@ -266,6 +302,15 @@ document.getElementById("exactSearchBtn")
             alert("搜尋失敗");
         });
 });
+async function getVoteCount(category, placeName) {
+    const { count } = await supabase
+        .from("votes")
+        .select("*", { count: "exact", head: true })
+        .eq("category", category)
+        .eq("place_name", placeName);
+
+    return count || 0;
+}
 async function votePlace(category, placeName) {
 
     const userId =
