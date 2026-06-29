@@ -188,7 +188,7 @@ document.querySelectorAll(".filters button").forEach(button => {
   });
 });
 
-function loadPlaces(category = "全部") {
+async function loadPlaces(category = "全部") {
   const q = category === "全部" ? "嘉義 美食" : `嘉義 ${category}`;
 
   fetch(`https://chiayi-map.vercel.app/api/places?q=${encodeURIComponent(q)}`)
@@ -203,12 +203,14 @@ function loadPlaces(category = "全部") {
 }
       places.sort((a, b) => {
     const scoreA =
-        (a.ratingCount || 0) * 0.7 +
-        (a.rating || 0) * 100 * 0.3;
+    (a.rating || 0) * 800 +
+    Math.min(a.ratingCount || 0, 1000) * 0.2 +
+    (a.voteCount || 0) * 100;
 
-    const scoreB =
-        (b.ratingCount || 0) * 0.7 +
-        (b.rating || 0) * 100 * 0.3;
+const scoreB =
+    (b.rating || 0) * 800 +
+    Math.min(b.ratingCount || 0, 1000) * 0.2 +
+    (b.voteCount || 0) * 100;
 
     return scoreB - scoreA;
 });
