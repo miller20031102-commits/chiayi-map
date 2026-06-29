@@ -177,3 +177,41 @@ document.getElementById("analyzeThreadBtn")
             alert("分析失敗");
         });
 });
+document.getElementById("exactSearchBtn")
+.addEventListener("click", () => {
+    const keyword = document.getElementById("exactSearchInput").value.trim();
+
+    if (!keyword) {
+        alert("請輸入店名");
+        return;
+    }
+
+    const q = `嘉義 ${keyword}`;
+
+    fetch(`https://chiayi-map.vercel.app/api/places?q=${encodeURIComponent(q)}`)
+        .then(res => res.json())
+        .then(data => {
+            let resultPlaces = data.places || [];
+
+            resultPlaces = resultPlaces.filter(place =>
+                place.name.includes(keyword) ||
+                keyword.includes(place.name)
+            );
+
+            if (resultPlaces.length === 0) {
+                alert("找不到這間店，請換個關鍵字");
+                return;
+            }
+
+            places = resultPlaces;
+
+            renderMarkers("全部");
+
+            map.setView([places[0].lat, places[0].lng], 16);
+            showPlaceCard(places[0]);
+        })
+        .catch(error => {
+            console.error(error);
+            alert("搜尋失敗");
+        });
+});
