@@ -239,50 +239,6 @@ const scoreB =
     });
 }
 loadPlaces("全部");
-document.getElementById("analyzeThreadBtn")
-.addEventListener("click", () => {
-
-    const text = document.getElementById("threadText").value.trim();
-    if (
-    text.includes("threads.net") ||
-    text.includes("threads.com")
-) {
-    alert("目前網址無法直接解析，請先打開 Threads，複製文章文字後貼上來。");
-    return;
-}
-
-    if (!text) {
-        alert("請先貼上 Threads 文章");
-        return;
-    }
-
-    const q = `嘉義 ${text}`;
-
-    fetch(`https://chiayi-map.vercel.app/api/places?q=${encodeURIComponent(q)}`)
-        .then(res => res.json())
-        .then(data => {
-
-            places = data.places || [];
-
-            if (places.length === 0) {
-                alert("沒有找到符合的店家");
-                return;
-            }
-
-            renderMarkers("全部");
-
-            map.setView(
-                [places[0].lat, places[0].lng],
-                15
-            );
-
-            showPlaceCard(places[0]);
-        })
-        .catch(error => {
-            console.error(error);
-            alert("分析失敗");
-        });
-});
 document.getElementById("exactSearchBtn")
 .addEventListener("click", () => {
     const keyword = document.getElementById("exactSearchInput").value.trim();
