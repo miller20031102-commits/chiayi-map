@@ -66,6 +66,12 @@ function showPlaceCard(place) {
 載入票數中...
 </p>
   `;
+  getVoteCount(place.category, place.name).then(count => {
+    const voteText = document.getElementById(`vote-count-${place.name}`);
+    if (voteText) {
+        voteText.innerText = `👍 目前票數：${count}`;
+    }
+});
 }
 
 function renderMarkers(category = "全部") {
@@ -258,4 +264,18 @@ async function votePlace(category, placeName) {
         });
 
     alert("投票成功！");
+}
+async function getVoteCount(category, placeName) {
+    const { count, error } = await db
+        .from("votes")
+        .select("*", { count: "exact", head: true })
+        .eq("category", category)
+        .eq("place_name", placeName);
+
+    if (error) {
+        console.error(error);
+        return 0;
+    }
+
+    return count || 0;
 }
