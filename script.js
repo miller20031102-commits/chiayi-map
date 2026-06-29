@@ -59,7 +59,9 @@ function showPlaceCard(place) {
     (place.voteCount || 0) * 100
 )}
     <p>📍 ${place.address || "無地址"}</p>
-    <p>${place.description || "Google Maps 抓到的嘉義推薦地點。"}</p>
+   <p class="place-review">
+    💬 ${place.review || "這間店最近很熱門，很多人推薦！"}
+</p>
     <a href="${place.googleMapUrl}" target="_blank">開啟 Google Maps</a>
     <br><br>
 
